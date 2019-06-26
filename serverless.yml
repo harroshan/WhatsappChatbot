@@ -1,0 +1,19 @@
+service: jobschedule
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: us-west-2
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - ssm:GetParameters
+      Resource: "arn:aws:ssm:us-west-2:175264732179:parameter/*"  
+functions:
+  jobBootWebhook:
+    handler: handler.jobBotWebhook
+    events:
+      - http:
+          path: jobbotwebhook
+          method: post
+plugins:
+  - serverless-offline
